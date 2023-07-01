@@ -78,7 +78,7 @@ app.post<{}, PizzaResponse>("/pizzas", (req, res) => {
   });
 });
 
-app.post<{}, PizzaResponse>("/toppings", (req, res) => {
+app.post<{}, ToppingResponse>("/toppings", (req, res) => {
 
   const dietary = new Dietary(DietaryType.Meat,'Etli');
   const dietary2 = new Dietary(DietaryType.Cheese,'Peynirli');
@@ -91,14 +91,9 @@ app.post<{}, PizzaResponse>("/toppings", (req, res) => {
   const topping4= new Topping('Kasar Peyniri','İzmir kasar peyniri',dietary2,22);
   const topping5= new Topping('Zeytin','İzmir zeytini',dietary3,14);
 
-  const toppings = [topping,topping2,topping3,topping4,topping5];
-  const toppings2 = [topping,topping3,topping4,topping5];
-
-  const pizza = new Pizza('Margherita','Italyan ekşi mayalı ev yapımı domates soslu',dietary,toppings2,199);
-  const pizza2 = new Pizza('Sucuklu','İzmir sucuklu',dietary,toppings,250);
 
   res.json({
-    pizza: [pizza,pizza2]
+    topping: [topping,topping2,topping3,topping4,topping5]
   });
 });
 
@@ -109,6 +104,18 @@ export interface PizzaResponse {
 
 export interface ToppingResponse {
   topping: Topping[];
+}
+
+export interface DrinkResponse {
+  drink: Drink[];
+}
+
+export interface DessertResponse {
+  dessert: Dessert[];
+}
+
+export interface CampaignResponse {
+  campaign: Campaign[];
 }
 
 class Pizza {
@@ -146,6 +153,34 @@ class Topping {
   }
 }
 
+class Drink {
+  name: string;
+  description: string;
+  diartary: Dietary;
+  price: number;
+
+  constructor(name: string, description: string, diartary: Dietary, price: number) {
+    this.name = name;
+    this.description = description;
+    this.diartary = diartary;
+    this.price = price;
+  }
+}
+
+class Dessert {
+  name: string;
+  description: string;
+  diartary: Dietary;
+  price: number;
+
+  constructor(name: string, description: string, diartary: Dietary, price: number) {
+    this.name = name;
+    this.description = description;
+    this.diartary = diartary;
+    this.price = price;
+  }
+}
+
 class Dietary {
   type: DietaryType;
   description: string;
@@ -162,8 +197,6 @@ enum DietaryType {
   Vegatable,
   Vegan,
 }
-
-
 
 
 
