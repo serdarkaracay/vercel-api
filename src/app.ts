@@ -54,14 +54,32 @@ app.post<{}, CustomerResponse>("/customer", (req, res) => {
   });
 });
 
-app.post<{}, CustomerResponse>("/pizzas", (req, res) => {
+app.post<{}, PizzaResponse>("/pizzas", (req, res) => {
+
+  const dietary = new Dietary(DietaryType.Meat,'Etli');
+  const dietary2 = new Dietary(DietaryType.Cheese,'Peynirli');
+  const dietary3 = new Dietary(DietaryType.Vegatable,'Sebzeli');
+  const dietary4 = new Dietary(DietaryType.Vegan,'Vegan');
+
+  const topping = new Topping('Sucuk','Halal Sucuk',dietary,24);
+  const topping2= new Topping('Mantar','Fırınlanmıs zeytinyaglı',dietary3,25);
+  const topping3= new Topping('Kecı Peyniri','Italyan keçi peyniri',dietary2,19);
+  const topping4= new Topping('Kasar Peyniri','İzmir kasar peyniri',dietary2,22);
+  const topping5= new Topping('Zeytin','İzmir zeytini',dietary3,14);
+
+  const toppings = [topping,topping2,topping3,topping4,topping5];
+  const toppings2 = [topping,topping3,topping4,topping5];
+
+  const pizza = new Pizza('Margherita','Italyan ekşi mayalı ev yapımı domates soslu',dietary,toppings2,199);
+  const pizza2 = new Pizza('Sucuklu','İzmir sucuklu',dietary,toppings,250);
+
   res.json({
-    customer: new Customer("serdar", req.body.phone, "serdar@serdar"),
+    pizza: [pizza,pizza2]
   });
 });
 
 export interface PizzaResponse {
-  pizza: Pizza;
+  pizza: Pizza[];
 }
 
 class Pizza {
